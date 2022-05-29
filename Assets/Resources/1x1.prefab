@@ -103,6 +103,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arrows
       objectReference: {fileID: 0}
+    - target: {fileID: 1473154581730518760, guid: 4f5974e2435b34d53a625fe37d7264f0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3123897622157350549, guid: 4f5974e2435b34d53a625fe37d7264f0,
         type: 3}
       propertyPath: m_RootOrder
@@ -156,6 +161,16 @@ PrefabInstance:
     - target: {fileID: 3123897622157350549, guid: 4f5974e2435b34d53a625fe37d7264f0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031979461466214376, guid: 4f5974e2435b34d53a625fe37d7264f0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031979461466214376, guid: 4f5974e2435b34d53a625fe37d7264f0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
