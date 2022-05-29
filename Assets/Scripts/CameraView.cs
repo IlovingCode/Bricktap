@@ -1,10 +1,12 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public class CameraView : MonoBehaviour
 {
     public Camera Camera;
     public float CameraSpeed = 10;
+    public float delay = 3f;
     public Vector3 CameraPos1;
     public Vector3 CameraRot1;
     public Vector3 CameraPos2;
@@ -15,43 +17,51 @@ public class CameraView : MonoBehaviour
     private Bounds levelBounds;
 
     // ConfigEntity _configListener;
-
-    private void Update()
+    IEnumerator Start()
     {
-        // if (_contexts != null && _contexts.game.hasCamera && _contexts.game.cameraEntity.hasPosition3 && !_contexts.game.hasCameraReset)
-        if (hasPosition3)
-        {
-            var targetPosition = position3;
-            var lerp = Time.deltaTime * CameraSpeed;
-            var t = transform;
-            t.position = Vector3.Lerp(t.position, targetPosition, lerp);
-            if (hasLevelBounds)
-            {
-                var boundsCenter = levelBounds.center;
-                var currentToBounds = t.position - boundsCenter;
-                var targetToBounds = targetPosition - boundsCenter;
-                t.position = boundsCenter + currentToBounds.normalized * targetToBounds.magnitude;
-                t.LookAt(boundsCenter, t.up);
-            }
-            else
-            {
-                t.position = Vector3.Lerp(t.position, targetPosition, lerp);
-            }
-        }
+        yield return new WaitForSeconds(delay);
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Camera.gameObject.transform.DOLocalMove(new Vector3(CameraPos1.x, CameraPos1.y, CameraPos1.z), 1f).SetEase(Ease.InOutQuad);
-            Camera.gameObject.transform.DOLocalRotate(CameraRot1, 1).SetEase(Ease.InOutQuad);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Camera.gameObject.transform.DOLocalMove(new Vector3(CameraPos2.x, CameraPos2.y, CameraPos2.z), 1f).SetEase(Ease.InOutQuad);
-            Camera.gameObject.transform.DOLocalRotate(CameraRot2, 1).SetEase(Ease.InOutQuad);
-        }
-        
+        Camera.gameObject.transform.DOLocalMove(new Vector3(CameraPos2.x, CameraPos2.y, CameraPos2.z), 1f).SetEase(Ease.InOutQuad);
+        Camera.gameObject.transform.DOLocalRotate(CameraRot2, 1).SetEase(Ease.InOutQuad);
     }
+
+
+    // private void Update()
+    // {
+    //     // if (_contexts != null && _contexts.game.hasCamera && _contexts.game.cameraEntity.hasPosition3 && !_contexts.game.hasCameraReset)
+    //     if (hasPosition3)
+    //     {
+    //         var targetPosition = position3;
+    //         var lerp = Time.deltaTime * CameraSpeed;
+    //         var t = transform;
+    //         t.position = Vector3.Lerp(t.position, targetPosition, lerp);
+    //         if (hasLevelBounds)
+    //         {
+    //             var boundsCenter = levelBounds.center;
+    //             var currentToBounds = t.position - boundsCenter;
+    //             var targetToBounds = targetPosition - boundsCenter;
+    //             t.position = boundsCenter + currentToBounds.normalized * targetToBounds.magnitude;
+    //             t.LookAt(boundsCenter, t.up);
+    //         }
+    //         else
+    //         {
+    //             t.position = Vector3.Lerp(t.position, targetPosition, lerp);
+    //         }
+    //     }
+
+    //     if (Input.GetKeyDown(KeyCode.A))
+    //     {
+    //         Camera.gameObject.transform.DOLocalMove(new Vector3(CameraPos1.x, CameraPos1.y, CameraPos1.z), 1f).SetEase(Ease.InOutQuad);
+    //         Camera.gameObject.transform.DOLocalRotate(CameraRot1, 1).SetEase(Ease.InOutQuad);
+    //     }
+
+    //     if (Input.GetKeyDown(KeyCode.S))
+    //     {
+    //         Camera.gameObject.transform.DOLocalMove(new Vector3(CameraPos2.x, CameraPos2.y, CameraPos2.z), 1f).SetEase(Ease.InOutQuad);
+    //         Camera.gameObject.transform.DOLocalRotate(CameraRot2, 1).SetEase(Ease.InOutQuad);
+    //     }
+
+    // }
 
     // public override void Link(Contexts contexts, GameEntity entity)
     // {
