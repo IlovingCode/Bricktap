@@ -32,10 +32,9 @@ public class Block : MonoBehaviour
             enabled = false;
         }
 
-        if (timer > .2f)
+        if (timer > .2f && indirect)
         {
-            if (indirect) Stop();
-            else sign = maxSpeed;
+            Stop();
         }
 
         this.transform.position = origin + direction * timer;
@@ -45,7 +44,7 @@ public class Block : MonoBehaviour
     {
         direction = dir;
         enabled = true;
-        sign = minSpeed;
+        sign = indir ? minSpeed : maxSpeed;
         indirect = indir;
     }
 
@@ -61,7 +60,6 @@ public class Block : MonoBehaviour
         if (sign > 0 && block.sign == 0)
         {
             Stop();
-            Debug.Log("OnTriggerEnter " + other.name);
             block.Move(direction, true);
         }
     }

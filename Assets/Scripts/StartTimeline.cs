@@ -6,13 +6,16 @@ public class StartTimeline : MonoBehaviour
 {
     public PlayableDirector Timeline;
     public float delay = 1f;
+    public AudioClip[] clips;
 
     public string TriggerKey = "s";
+    private AudioSource audioSource;
 
     IEnumerator Start()
     {
         yield return new WaitForSeconds(delay);
 
+        // audioSource.clip = clips[clips.Length - 1];
         Timeline.Play();
 
         while (enabled)
@@ -24,6 +27,7 @@ public class StartTimeline : MonoBehaviour
                 yield return null;
             }
 
+            audioSource.clip = clips[Random.Range(0, clips.Length)];
             Timeline.Play();
         }
     }
