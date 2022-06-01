@@ -13,6 +13,8 @@ public class StartTimeline : MonoBehaviour
 
     IEnumerator Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         yield return new WaitForSeconds(delay);
 
         // audioSource.clip = clips[clips.Length - 1];
