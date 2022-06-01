@@ -8,6 +8,15 @@ public class Block : MonoBehaviour
     public static float minSpeed = 1f;
     public static float maxSpeed = 5f;
 
+    static Dictionary<string, Vector3> sizeMap = new Dictionary<string, Vector3>() {
+        {"1x1", new Vector3(1, 1, 1)},
+        {"1x2", new Vector3(2, 1, 1)},
+        {"1x4", new Vector3(4, 1, 1)},
+        {"2x2", new Vector3(2, 2, 1)},
+    };
+
+    public static Vector3 getSize(GameObject obj) => obj.transform.TransformDirection(sizeMap[obj.name]);
+
     Vector3 direction;
     Vector3 origin;
     float timer = 0f;
@@ -18,6 +27,7 @@ public class Block : MonoBehaviour
     {
         origin = transform.position;
         enabled = false;
+        gameObject.name = gameObject.name.Substring(0, 3);
     }
 
     // Update is called once per frame
@@ -30,6 +40,7 @@ public class Block : MonoBehaviour
             timer = 0;
             sign = 0;
             enabled = false;
+            indirect = false;
         }
 
         if (timer > .2f && indirect)
@@ -48,18 +59,34 @@ public class Block : MonoBehaviour
         indirect = indir;
     }
 
-    void Stop()
+    void Stop(GameObject block = null)
     {
         sign = -minSpeed;
-        indirect = false;
+        if (!indirect)
+        {
+            timer = .2f;
+
+            var d = origin - block.transform.position;
+            d.x *= direction.x;
+            d.y *= direction.y;
+            d.z *= direction.z;
+
+            var s = getSize(block) + getSize(gameObject);
+            s *= .5f;
+            s.x *= direction.x;
+            s.y *= direction.y;
+            s.z *= direction.z;
+            Debug.Log(s);
+            origin += d - s;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var block = other.GetComponent<Block>();
-        if (sign > 0 && block.sign == 0)
+        if (sign > 0 && !block.enabled)
         {
-            Stop();
+            Stop(other.gameObject);
             block.Move(direction, true);
         }
     }

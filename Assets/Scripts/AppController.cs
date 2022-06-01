@@ -29,8 +29,14 @@ public class AppController : MonoBehaviour
                 // Debug.Log(objectHit.GetChild(0).GetChild(0).up);
                 var dir = objectHit.GetChild(0).GetChild(0).up;
                 ray.direction = dir;
-                ray.origin = objectHit.position;
-                objectHit.GetComponent<Block>().Move(dir, Physics.Raycast(ray, 1f));
+
+                var d = Block.getSize(objectHit.gameObject) * .5f;
+                d.x *= dir.x;
+                d.y *= dir.y;
+                d.z *= dir.z;
+
+                ray.origin = objectHit.position + d;
+                objectHit.GetComponent<Block>().Move(dir, Physics.Raycast(ray, .5f));
 
                 // Do something with the object that was hit by the raycast.
             }
