@@ -23,6 +23,8 @@ public class CameraView : MonoBehaviour
 
         Camera.gameObject.transform.DOLocalMove(new Vector3(CameraPos2.x, CameraPos2.y, CameraPos2.z), 1f).SetEase(Ease.InOutQuad);
         Camera.gameObject.transform.DOLocalRotate(CameraRot2, 1).SetEase(Ease.InOutQuad);
+
+        GetComponent<AudioSource>().PlayDelayed(.5f);
     }
 
 

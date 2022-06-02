@@ -66,7 +66,7 @@ public class Block : MonoBehaviour
         {
             timer = .2f;
 
-            var d = origin - block.transform.position;
+            var d = block.transform.position - origin;
             d.x *= direction.x;
             d.y *= direction.y;
             d.z *= direction.z;
@@ -76,7 +76,7 @@ public class Block : MonoBehaviour
             s.x *= direction.x;
             s.y *= direction.y;
             s.z *= direction.z;
-            Debug.Log(s);
+            Debug.Log(d - s);
             origin += d - s;
         }
     }
@@ -84,7 +84,7 @@ public class Block : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var block = other.GetComponent<Block>();
-        if (sign > 0 && !block.enabled)
+        if (!block.enabled)
         {
             Stop(other.gameObject);
             block.Move(direction, true);

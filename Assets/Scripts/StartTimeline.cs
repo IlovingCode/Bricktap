@@ -18,6 +18,7 @@ public class StartTimeline : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         audioSource.clip = clips[0];
+        audioSource.time = clips[0].length * .6f;
         Timeline.Play();
 
         while (enabled)
@@ -30,6 +31,7 @@ public class StartTimeline : MonoBehaviour
             }
 
             audioSource.clip = clips[Random.Range(1, clips.Length)];
+            audioSource.time = 0f;
             Timeline.Play();
         }
     }
