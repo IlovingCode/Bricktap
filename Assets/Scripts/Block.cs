@@ -57,6 +57,14 @@ public class Block : MonoBehaviour
         enabled = true;
         sign = indir ? minSpeed : maxSpeed;
         indirect = indir;
+
+        if(!indir) {
+            Invoke(nameof(End), 5f);
+        }
+    }
+
+    void End() {
+        Destroy(gameObject);
     }
 
     void Stop(GameObject block = null)
@@ -67,17 +75,18 @@ public class Block : MonoBehaviour
             timer = .2f;
 
             var d = block.transform.position - origin;
-            d.x *= direction.x;
-            d.y *= direction.y;
-            d.z *= direction.z;
+            d.x *= Mathf.Abs(direction.x);
+            d.y *= Mathf.Abs(direction.y);
+            d.z *= Mathf.Abs(direction.z);
 
             var s = getSize(block) + getSize(gameObject);
             s *= .5f;
             s.x *= direction.x;
             s.y *= direction.y;
             s.z *= direction.z;
-            Debug.Log(d - s);
             origin += d - s;
+
+            CancelInvoke();
         }
     }
 
