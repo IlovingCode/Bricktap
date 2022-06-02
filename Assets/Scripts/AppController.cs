@@ -7,17 +7,21 @@ public class AppController : MonoBehaviour
     [SerializeField] float minSpeed;
     [SerializeField] float maxSpeed;
     [SerializeField] Transform hand;
+    [SerializeField] Transform X;
     [SerializeField] float delay;
+    [SerializeField] int maxTap = 40;
 
-    void Awake()
-    {
-    }
+    int count;
+
 
     IEnumerator Start()
     {
         Block.minSpeed = minSpeed;
         Block.maxSpeed = maxSpeed;
         enabled = false;
+        count = 0;
+        var scale = X.localScale;
+        X.localScale = Vector3.zero;
 
         yield return new WaitForSeconds(delay);
 
@@ -27,10 +31,15 @@ public class AppController : MonoBehaviour
             timer += Time.deltaTime;
             hand.position = Vector3.Lerp(hand.position, Input.mousePosition, .02f);
 
-            yield return null;  
+            yield return null;
         }
 
         enabled = true;
+
+        while (count < maxTap) yield return null;
+
+        enabled = false;
+        X.DOScale(scale, .5f);
     }
 
     void Update()
@@ -56,6 +65,8 @@ public class AppController : MonoBehaviour
 
                 ray.origin = objectHit.position + d;
                 objectHit.GetComponent<Block>().Move(dir, Physics.Raycast(ray, .5f));
+
+                count++;
 
                 // Do something with the object that was hit by the raycast.
             }
