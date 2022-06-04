@@ -22843,12 +22843,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpeed: 2
-  maxSpeed: 10
+  maxSpeed: 15
   hand: {fileID: 288812401}
   X: {fileID: 531947013}
-  delay: 4
-  clickDelay: 0.5
-  handMoveDuration: 0.3
+  delay: 3
+  clickDelay: 0.23
+  handMoveDuration: 0.23
   hitBlocks:
   - {fileID: 1813690185}
   - {fileID: 1351060645}
@@ -22974,6 +22974,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 6639158323025877221, guid: c16a5fd663cd84a1b96d906963dc8284,
+        type: 3}
+      propertyPath: delay
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6639158323025877221, guid: c16a5fd663cd84a1b96d906963dc8284,
         type: 3}
