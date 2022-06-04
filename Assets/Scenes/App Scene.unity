@@ -22849,7 +22849,7 @@ MonoBehaviour:
   X: {fileID: 531947013}
   delay: 3
   clickDelay: 0.23
-  handMoveDuration: 0.23
+  handMoveDuration: 0.25
   hitBlocks:
   - {fileID: 1813690185}
   - {fileID: 1351060645}
