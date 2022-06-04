@@ -9,9 +9,10 @@ public class AppController : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] Transform X;
     [SerializeField] float delay;
-    [SerializeField] int maxTap = 40;
-
-    int count;
+    [SerializeField] float clickDelay;
+    [SerializeField] float handMoveDuration;
+    [SerializeField] Transform[] hitBlocks;
+    [SerializeField] Vector3[] offsets;
 
 
     IEnumerator Start()
@@ -19,62 +20,91 @@ public class AppController : MonoBehaviour
         Block.minSpeed = minSpeed;
         Block.maxSpeed = maxSpeed;
         enabled = false;
-        count = 0;
         var scale = X.localScale;
         X.localScale = Vector3.zero;
 
         yield return new WaitForSeconds(delay);
 
-        var timer = 0f;
-        while (timer < 2f)
-        {
-            timer += Time.deltaTime;
-            hand.position = Vector3.Lerp(hand.position, Input.mousePosition, .02f);
+        // hand.DOMove()
 
-            yield return null;
+        // var timer = 0f;
+        // while (timer < 2f)
+        // {
+        //     timer += Time.deltaTime;
+        //     hand.position = Vector3.Lerp(hand.position, Input.mousePosition, .02f);
+
+        //     yield return null;
+        // }
+
+        var wait = new WaitForSeconds(clickDelay);
+        var camera = GetComponentInChildren<Camera>();
+        var ray = new Ray();
+        var count = 0;
+
+        yield return hand.DOMove(camera.WorldToScreenPoint(
+            hitBlocks[0].position + offsets[0]), handMoveDuration + clickDelay).WaitForCompletion();
+        foreach (var block in hitBlocks)
+        {
+            Debug.Log(count.ToString() + offsets[count]);
+            yield return hand.DOMove(camera.WorldToScreenPoint(block.position + offsets[count]), handMoveDuration).WaitForCompletion();
+            count++;
+
+            yield return hand.DOScale(Vector3.one * .9f, .2f).WaitForCompletion();
+
+            var dir = block.GetChild(0).GetChild(0).up;
+            ray.direction = dir;
+
+            var d = Block.getSize(block.gameObject) * .5f;
+            d.x *= dir.x;
+            d.y *= dir.y;
+            d.z *= dir.z;
+
+            ray.origin = block.position + d;
+            block.GetComponent<Block>().Move(dir, Physics.Raycast(ray, .5f));
+
+            hand.DOScale(Vector3.one, .2f);
+            yield return wait;
         }
 
-        enabled = true;
+        // enabled = true;
 
-        while (count < maxTap) yield return null;
-
-        enabled = false;
+        // enabled = false;
         X.DOScale(scale, .5f);
     }
 
-    void Update()
-    {
-        hand.position = Vector3.Lerp(hand.position, Input.mousePosition, .1f);
-        if (Input.GetMouseButtonDown(0))
-        {
-            hand.DOScale(Vector3.one * .9f, .2f);
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                Transform objectHit = hit.transform;
-                // Debug.Log(objectHit.GetChild(0).GetChild(0).up);
-                var dir = objectHit.GetChild(0).GetChild(0).up;
-                ray.direction = dir;
 
-                var d = Block.getSize(objectHit.gameObject) * .5f;
-                d.x *= dir.x;
-                d.y *= dir.y;
-                d.z *= dir.z;
+    // void Update()
+    // {
+    //     hand.position = Vector3.Lerp(hand.position, Input.mousePosition, .1f);
+    //     if (Input.GetMouseButtonDown(0))
+    //     {
+    //         hand.DOScale(Vector3.one * .9f, .2f);
+    //         RaycastHit hit;
+    //         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                ray.origin = objectHit.position + d;
-                objectHit.GetComponent<Block>().Move(dir, Physics.Raycast(ray, .5f));
+    //         if (Physics.Raycast(ray, out hit))
+    //         {
+    //             Transform objectHit = hit.transform;
+    //             // Debug.Log(objectHit.GetChild(0).GetChild(0).up);
+    //             var dir = objectHit.GetChild(0).GetChild(0).up;
+    //             ray.direction = dir;
 
-                count++;
+    //             var d = Block.getSize(objectHit.gameObject) * .5f;
+    //             d.x *= dir.x;
+    //             d.y *= dir.y;
+    //             d.z *= dir.z;
 
-                // Do something with the object that was hit by the raycast.
-            }
-        }
+    //             ray.origin = objectHit.position + d;
+    //             objectHit.GetComponent<Block>().Move(dir, Physics.Raycast(ray, .5f));
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            hand.DOScale(Vector3.one, .2f);
-        }
-    }
+    //             // Do something with the object that was hit by the raycast.
+    //         }
+    //     }
+
+    //     if (Input.GetMouseButtonUp(0))
+    //     {
+    //         hand.DOScale(Vector3.one, .2f);
+    //     }
+    // }
 }

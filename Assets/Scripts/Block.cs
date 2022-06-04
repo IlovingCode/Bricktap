@@ -93,7 +93,7 @@ public class Block : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var block = other.GetComponent<Block>();
-        if (!block.enabled)
+        if (sign > 0 && !block.enabled)
         {
             Stop(other.gameObject);
             block.Move(direction, true);
