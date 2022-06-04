@@ -13,7 +13,7 @@ public class AppController : MonoBehaviour
     [SerializeField] float handMoveDuration;
     [SerializeField] Transform[] hitBlocks;
     [SerializeField] Vector3[] offsets;
-
+    [SerializeField] AudioSource _falseAudioSource;
 
     IEnumerator Start()
     {
@@ -70,6 +70,7 @@ public class AppController : MonoBehaviour
 
         // enabled = false;
         X.DOScale(scale, .5f);
+        _falseAudioSource.Play();
     }
 
 
