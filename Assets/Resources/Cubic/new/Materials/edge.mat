@@ -161,8 +161,8 @@ Material:
     - _FlatRimEdgeSmoothness: 0.5
     - _FlatRimLightAlign: 0
     - _FlatRimSize: 0.25
-    - _FlatSpecularEdgeSmoothness: 0.45
-    - _FlatSpecularSize: 0.473
+    - _FlatSpecularEdgeSmoothness: 0.232
+    - _FlatSpecularSize: 0.282
     - _Flatness: 1
     - _FlatnessExtra: 1
     - _GlossMapScale: 1
