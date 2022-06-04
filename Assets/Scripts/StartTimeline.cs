@@ -20,7 +20,7 @@ public class StartTimeline : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         audioSource.clip = clips[0];
-        audioSource.time = clips[0].length * .55f + Random.Range(.1f, .3f);
+        audioSource.time = clips[0].length * .55f; // + Random.Range(.2f, .3f);
         audioSource.volume = .7f;
         Timeline.Play();
 
