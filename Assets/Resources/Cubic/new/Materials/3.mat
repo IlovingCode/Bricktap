@@ -183,16 +183,16 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BASE_COLOR: {r: 0.031985905, g: 0.04979807, b: 0.7410072, a: 1}
-    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.02520132, g: 0, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorDim: {r: 0, g: 0, b: 0, a: 1}
+    - _ColorDim: {r: 0, g: 0.15439193, b: 0.990566, a: 1}
     - _ColorDimCurve: {r: 0.1963729, g: 0.24729031, b: 0.87613314, a: 1}
     - _ColorDimExtra: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorDimSteps: {r: 0.1963729, g: 0.24729031, b: 0.87613314, a: 1}
     - _ColorGradient: {r: 0, g: 0.7777777, b: 1, a: 1}
     - _EMISSION_COLOR: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FlatRimColor: {r: 0, g: 0.735849, b: 0.70870596, a: 1}
+    - _FlatRimColor: {r: 0, g: 0.06598463, b: 0.7372549, a: 1}
     - _FlatSpecularColor: {r: 0, g: 0.59433955, b: 0.764151, a: 1}
     - _LightmapDirection: {r: 0, g: 1, b: 0, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}

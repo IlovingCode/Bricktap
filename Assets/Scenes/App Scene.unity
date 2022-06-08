@@ -22944,7 +22944,7 @@ MonoBehaviour:
   maxSpeed: 15
   hand: {fileID: 288812401}
   X: {fileID: 531947013}
-  delay: 3
+  delay: 2.5
   clickDelay: 0.22
   handMoveDuration: 0.25
   hitBlocks:
@@ -23063,6 +23063,21 @@ PrefabInstance:
         type: 3}
       propertyPath: far clip plane
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055764065346443768, guid: c16a5fd663cd84a1b96d906963dc8284,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055764065346443768, guid: c16a5fd663cd84a1b96d906963dc8284,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055764065346443768, guid: c16a5fd663cd84a1b96d906963dc8284,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2432411908294653777, guid: c16a5fd663cd84a1b96d906963dc8284,
         type: 3}
