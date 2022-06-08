@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AppController : MonoBehaviour
 {
+    public static bool IsGameEnd = false;
     [SerializeField] float minSpeed;
     [SerializeField] float maxSpeed;
     [SerializeField] Transform hand;
@@ -65,7 +66,7 @@ public class AppController : MonoBehaviour
             hand.DOScale(Vector3.one, .2f);
             yield return wait;
         }
-
+        AppController.IsGameEnd = true;
         // enabled = true;
 
         // enabled = false;
@@ -73,7 +74,15 @@ public class AppController : MonoBehaviour
         _falseAudioSource.Play();
     }
 
-
+    float timer = 0f;
+    void Update()
+    {
+        this.timer += Time.deltaTime;
+        if(this.timer > 27f)
+        {
+            AppController.IsGameEnd = true;
+        }
+    }
 
     // void Update()
     // {
