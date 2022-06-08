@@ -15,13 +15,13 @@ public class StartTimeline : MonoBehaviour
 
     IEnumerator Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        // audioSource = GetComponent<AudioSource>();
 
         yield return new WaitForSeconds(delay);
 
-        audioSource.clip = clips[0];
-        audioSource.time = clips[0].length * .55f; // + Random.Range(.2f, .3f);
-        audioSource.volume = .7f;
+        // audioSource.clip = clips[0];
+        // audioSource.time = clips[0].length * .55f; // + Random.Range(.2f, .3f);
+        // audioSource.volume = .7f;
         Timeline.Play();
 
         while (enabled)
@@ -34,14 +34,14 @@ public class StartTimeline : MonoBehaviour
             }
 
             {
-                audioId += Random.Range(1, clips.Length / 2);
-                audioId %= clips.Length;
-                if (audioId == 0) audioId++;
+                // audioId += Random.Range(1, clips.Length / 2);
+                // audioId %= clips.Length;
+                // if (audioId == 0) audioId++;
             }
 
-            audioSource.volume = 1f;
-            audioSource.clip = clips[audioId];
-            audioSource.time = 0f;
+            // audioSource.volume = 1f;
+            // audioSource.clip = clips[audioId];
+            // audioSource.time = 0f;
             Timeline.Play();
         }
     }

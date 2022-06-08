@@ -9,11 +9,12 @@ public class AppController : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] Transform X;
     [SerializeField] float delay;
+    [SerializeField] float xDelay;
     [SerializeField] float clickDelay;
     [SerializeField] float handMoveDuration;
     [SerializeField] Transform[] hitBlocks;
     [SerializeField] Vector3[] offsets;
-    [SerializeField] AudioSource _falseAudioSource;
+    // [SerializeField] AudioSource _falseAudioSource;
 
     IEnumerator Start()
     {
@@ -69,8 +70,9 @@ public class AppController : MonoBehaviour
         // enabled = true;
 
         // enabled = false;
+        yield return new WaitForSeconds(xDelay);
         X.DOScale(scale, .5f);
-        _falseAudioSource.Play();
+        // _falseAudioSource.Play();
     }
 
 
