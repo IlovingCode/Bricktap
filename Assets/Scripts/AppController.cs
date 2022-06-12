@@ -12,17 +12,20 @@ public class AppController : MonoBehaviour
     [SerializeField] float xDelay;
     [SerializeField] float clickDelay;
     [SerializeField] float handMoveDuration;
+    [SerializeField] float handClickDuration;
     [SerializeField] Transform[] hitBlocks;
     [SerializeField] Vector3[] offsets;
     // [SerializeField] AudioSource _falseAudioSource;
 
     IEnumerator Start()
     {
+        Application.targetFrameRate = 60;
         Block.minSpeed = minSpeed;
         Block.maxSpeed = maxSpeed;
         enabled = false;
         var scale = X.localScale;
         X.localScale = Vector3.zero;
+        var timer = Time.time;
 
         yield return new WaitForSeconds(delay);
 
@@ -43,14 +46,15 @@ public class AppController : MonoBehaviour
         var count = 0;
 
         yield return hand.DOMove(camera.WorldToScreenPoint(
-            hitBlocks[0].position + offsets[0]), handMoveDuration + clickDelay).WaitForCompletion();
+            hitBlocks[0].position + offsets[0]), handMoveDuration + clickDelay).SetEase(Ease.InOutQuad).WaitForCompletion();
         foreach (var block in hitBlocks)
         {
-            Debug.Log(count.ToString() + offsets[count]);
-            yield return hand.DOMove(camera.WorldToScreenPoint(block.position + offsets[count]), handMoveDuration).WaitForCompletion();
+            // Debug.Log(count.ToString() + offsets[count]);
+            yield return hand.DOMove(camera.WorldToScreenPoint(block.position + offsets[count]), handMoveDuration)
+                .SetEase(Ease.OutQuad).WaitForCompletion();
             count++;
 
-            yield return hand.DOScale(Vector3.one * .9f, .2f).WaitForCompletion();
+            yield return hand.DOScale(Vector3.one * .9f, handClickDuration).WaitForCompletion();
 
             var dir = block.GetChild(0).GetChild(0).up;
             ray.direction = dir;
@@ -71,8 +75,9 @@ public class AppController : MonoBehaviour
 
         // enabled = false;
         yield return new WaitForSeconds(xDelay);
-        X.DOScale(scale, .5f);
+        X.DOScale(scale, .5f).SetEase(Ease.InQuad);
         // _falseAudioSource.Play();
+        Debug.Log(Time.time - timer);
     }
 
 

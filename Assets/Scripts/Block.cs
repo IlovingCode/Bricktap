@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,9 +31,9 @@ public class Block : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        timer += Time.deltaTime * sign;
+        timer += Time.fixedDeltaTime * sign;
 
         if (timer <= 0)
         {
@@ -58,12 +58,14 @@ public class Block : MonoBehaviour
         sign = indir ? minSpeed : maxSpeed;
         indirect = indir;
 
-        if(!indir) {
+        if (!indir)
+        {
             Invoke(nameof(End), 5f);
         }
     }
 
-    void End() {
+    void End()
+    {
         Destroy(gameObject);
     }
 
@@ -93,7 +95,7 @@ public class Block : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var block = other.GetComponent<Block>();
-        if (sign > 0 && !block.enabled)
+        if (!block.enabled)
         {
             Stop(other.gameObject);
             block.Move(direction, true);
