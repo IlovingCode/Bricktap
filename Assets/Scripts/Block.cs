@@ -48,7 +48,7 @@ public class Block : MonoBehaviour
             Stop();
         }
 
-        this.transform.position = origin + direction * timer;
+        transform.position = origin + direction * timer;
     }
 
     public void Move(Vector3 dir, bool indir = false)

@@ -42,30 +42,30 @@ public class AppController : MonoBehaviour
 
         var wait = new WaitForSeconds(clickDelay);
         var camera = GetComponentInChildren<Camera>();
-        var ray = new Ray();
+        // var ray = new Ray();
         var count = 0;
+        var handFirstMoveDuration = handMoveDuration + clickDelay;
 
-        yield return hand.DOMove(camera.WorldToScreenPoint(
-            hitBlocks[0].position + offsets[0]), handMoveDuration + clickDelay).SetEase(Ease.InOutQuad).WaitForCompletion();
         foreach (var block in hitBlocks)
         {
             // Debug.Log(count.ToString() + offsets[count]);
-            yield return hand.DOMove(camera.WorldToScreenPoint(block.position + offsets[count]), handMoveDuration)
+            yield return hand.DOMove(camera.WorldToScreenPoint(block.position + offsets[count]), handMoveDuration + handFirstMoveDuration)
                 .SetEase(Ease.OutQuad).WaitForCompletion();
             count++;
+            handFirstMoveDuration = 0f;
 
             yield return hand.DOScale(Vector3.one * .9f, handClickDuration).WaitForCompletion();
 
             var dir = block.GetChild(0).GetChild(0).up;
-            ray.direction = dir;
+            // ray.direction = dir;
 
-            var d = Block.getSize(block.gameObject) * .5f;
+            var d = Block.getSize(block.gameObject) * .5f + new Vector3(.3f, .3f, .3f);
             d.x *= dir.x;
             d.y *= dir.y;
             d.z *= dir.z;
 
-            ray.origin = block.position + d;
-            block.GetComponent<Block>().Move(dir, Physics.Raycast(ray, .5f));
+            // ray.origin = block.position + d;
+            block.GetComponent<Block>().Move(dir, Physics.CheckSphere(block.position + d, .3f));
 
             hand.DOScale(Vector3.one, .2f);
             yield return wait;

@@ -2279,7 +2279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: -400}
+  m_AnchoredPosition: {x: 260, y: -360}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.05, y: 0.95}
 --- !u!114 &288812402
@@ -22525,7 +22525,7 @@ MonoBehaviour:
   X: {fileID: 531947013}
   delay: 3
   xDelay: 0
-  clickDelay: 0.24
+  clickDelay: 0.23
   handMoveDuration: 0.3
   handClickDuration: 0.15
   hitBlocks:
@@ -22697,17 +22697,17 @@ PrefabInstance:
     - target: {fileID: 6639158323025877221, guid: c16a5fd663cd84a1b96d906963dc8284,
         type: 3}
       propertyPath: CameraPos2.x
-      value: -18
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 6639158323025877221, guid: c16a5fd663cd84a1b96d906963dc8284,
         type: 3}
       propertyPath: CameraPos2.y
-      value: 11.7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6639158323025877221, guid: c16a5fd663cd84a1b96d906963dc8284,
         type: 3}
       propertyPath: CameraPos2.z
-      value: -18
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 6639158323025877221, guid: c16a5fd663cd84a1b96d906963dc8284,
         type: 3}
