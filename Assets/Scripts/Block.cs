@@ -7,6 +7,7 @@ public class Block : MonoBehaviour
     // Start is called before the first frame update
     public static float minSpeed = 1f;
     public static float maxSpeed = 5f;
+    public Block missing = null;
 
     static Dictionary<string, Vector3> sizeMap = new Dictionary<string, Vector3>() {
         {"1x1", new Vector3(1, 1, 1)},
@@ -99,6 +100,7 @@ public class Block : MonoBehaviour
         {
             Stop(other.gameObject);
             block.Move(direction, true);
+            if(missing) missing.Move(direction, true);
         }
     }
 }
