@@ -10,19 +10,23 @@ public class AppController : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] Transform X;
     [SerializeField] float delay;
+    [SerializeField] float xDelay;
     [SerializeField] float clickDelay;
     [SerializeField] float handMoveDuration;
+    [SerializeField] float handClickDuration;
     [SerializeField] Transform[] hitBlocks;
     [SerializeField] Vector3[] offsets;
-    [SerializeField] AudioSource _falseAudioSource;
+    // [SerializeField] AudioSource _falseAudioSource;
 
     IEnumerator Start()
     {
+        Application.targetFrameRate = 60;
         Block.minSpeed = minSpeed;
         Block.maxSpeed = maxSpeed;
         enabled = false;
         var scale = X.localScale;
         X.localScale = Vector3.zero;
+        var timer = Time.time;
 
         yield return new WaitForSeconds(delay);
 
@@ -39,29 +43,30 @@ public class AppController : MonoBehaviour
 
         var wait = new WaitForSeconds(clickDelay);
         var camera = GetComponentInChildren<Camera>();
-        var ray = new Ray();
+        // var ray = new Ray();
         var count = 0;
+        var handFirstMoveDuration = handMoveDuration + clickDelay;
 
-        yield return hand.DOMove(camera.WorldToScreenPoint(
-            hitBlocks[0].position + offsets[0]), handMoveDuration + clickDelay).WaitForCompletion();
         foreach (var block in hitBlocks)
         {
-            Debug.Log(count.ToString() + offsets[count]);
-            yield return hand.DOMove(camera.WorldToScreenPoint(block.position + offsets[count]), handMoveDuration).WaitForCompletion();
+            // Debug.Log(count.ToString() + offsets[count]);
+            yield return hand.DOMove(camera.WorldToScreenPoint(block.position + offsets[count]), handMoveDuration + handFirstMoveDuration)
+                .SetEase(Ease.OutQuad).WaitForCompletion();
             count++;
+            handFirstMoveDuration = 0f;
 
-            yield return hand.DOScale(Vector3.one * .9f, .2f).WaitForCompletion();
+            yield return hand.DOScale(Vector3.one * .9f, handClickDuration).WaitForCompletion();
 
             var dir = block.GetChild(0).GetChild(0).up;
-            ray.direction = dir;
+            // ray.direction = dir;
 
-            var d = Block.getSize(block.gameObject) * .5f;
+            var d = Block.getSize(block.gameObject) * .5f + new Vector3(.3f, .3f, .3f);
             d.x *= dir.x;
             d.y *= dir.y;
             d.z *= dir.z;
 
-            ray.origin = block.position + d;
-            block.GetComponent<Block>().Move(dir, Physics.Raycast(ray, .5f));
+            // ray.origin = block.position + d;
+            block.GetComponent<Block>().Move(dir, Physics.CheckSphere(block.position + d, .3f));
 
             hand.DOScale(Vector3.one, .2f);
             yield return wait;
@@ -70,8 +75,10 @@ public class AppController : MonoBehaviour
         // enabled = true;
 
         // enabled = false;
-        X.DOScale(scale, .5f);
-        _falseAudioSource.Play();
+        yield return new WaitForSeconds(xDelay);
+        X.DOScale(scale, .5f).SetEase(Ease.InQuad);
+        // _falseAudioSource.Play();
+        Debug.Log(Time.time - timer);
     }
 
     float timer = 0f;

@@ -1,16 +1,21 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.Playables;
 
 public class CameraView : MonoBehaviour
 {
     public Camera Camera;
-    public float CameraSpeed = 10;
-    public float delay = 3f;
+    public float moveTime = 1f;
+    public float camDelay = 1f;
+    public float soundDelay = 1f;
     public Vector3 CameraPos1;
     public Vector3 CameraRot1;
     public Vector3 CameraPos2;
     public Vector3 CameraRot2;
+    public PlayableDirector[] timelines;
+    public float[] playTimes;
+    public int[] playId;
     private bool hasLevelBounds;
     private bool hasPosition3;
     private Vector3 position3;
@@ -19,12 +24,28 @@ public class CameraView : MonoBehaviour
     // ConfigEntity _configListener;
     IEnumerator Start()
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(soundDelay);
+        GetComponent<AudioSource>().Play();
+        foreach (var t in timelines)
+        {
+            t.Play();
+        }
 
-        Camera.gameObject.transform.DOLocalMove(new Vector3(CameraPos2.x, CameraPos2.y, CameraPos2.z), 1f).SetEase(Ease.InOutQuad);
-        Camera.gameObject.transform.DOLocalRotate(CameraRot2, 1).SetEase(Ease.InOutQuad);
+        yield return new WaitForSeconds(camDelay);
+        var time = camDelay;
 
-        GetComponent<AudioSource>().PlayDelayed(.5f);
+        Camera.gameObject.transform.DOLocalMove(CameraPos2, moveTime).SetEase(Ease.InOutQuad);
+        Camera.gameObject.transform.DOLocalRotate(CameraRot2, moveTime).SetEase(Ease.InOutQuad);
+
+        var count = 0;
+        while (count < playTimes.Length)
+        {
+            yield return new WaitForSeconds(playTimes[count] - time);
+            time = playTimes[count];
+            timelines[playId[count]].Play();
+
+            count++;
+        }
     }
 
 

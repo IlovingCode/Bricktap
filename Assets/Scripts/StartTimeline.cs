@@ -4,7 +4,6 @@ using UnityEngine.Playables;
 
 public class StartTimeline : MonoBehaviour
 {
-    [SerializeField] bool isTriggerSound1st = false;
     public PlayableDirector Timeline;
     public float delay = 1f;
     public AudioClip[] clips;
@@ -12,42 +11,37 @@ public class StartTimeline : MonoBehaviour
     public string TriggerKey = "s";
     private AudioSource audioSource;
 
-    static int audioId = 0;
+    // static int audioId = 0;
 
     IEnumerator Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        // audioSource = GetComponent<AudioSource>();
 
-        yield return new WaitForSeconds(delay );
+        yield return new WaitForSeconds(delay);
 
-        if(this.isTriggerSound1st)
-        {
-        audioSource.clip = clips[0];
-        audioSource.time = clips[0].length * .55f;
-        audioSource.volume = 1.0f;
-        audioSource.pitch = 1.5f;
-        }
+        // audioSource.clip = clips[0];
+        // audioSource.time = clips[0].length * .55f; // + Random.Range(.2f, .3f);
+        // audioSource.volume = .7f;
         Timeline.Play();
 
-        while (enabled && AppController.IsGameEnd == false)
+        while (enabled)
         {
             var timer = Random.Range(5f, 13f);
-            while (timer > 0  && AppController.IsGameEnd == false)
+            while (timer > 0)
             {
                 timer -= Time.deltaTime;
                 yield return null;
             }
 
             {
-                audioId += Random.Range(1, clips.Length / 2);
-                audioId %= clips.Length;
-                if (audioId == 0) audioId++;
+                // audioId += Random.Range(1, clips.Length / 2);
+                // audioId %= clips.Length;
+                // if (audioId == 0) audioId++;
             }
 
-            audioSource.volume = 1f;
-            audioSource.clip = clips[audioId];
-            audioSource.time = 0f;
-            audioSource.pitch = 1.0f;
+            // audioSource.volume = 1f;
+            // audioSource.clip = clips[audioId];
+            // audioSource.time = 0f;
             Timeline.Play();
         }
     }

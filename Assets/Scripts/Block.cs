@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +7,7 @@ public class Block : MonoBehaviour
     // Start is called before the first frame update
     public static float minSpeed = 1f;
     public static float maxSpeed = 5f;
+    public Block missing = null;
 
     static Dictionary<string, Vector3> sizeMap = new Dictionary<string, Vector3>() {
         {"1x1", new Vector3(1, 1, 1)},
@@ -31,9 +32,9 @@ public class Block : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        timer += Time.deltaTime * sign;
+        timer += Time.fixedDeltaTime * sign;
 
         if (timer <= 0)
         {
@@ -48,7 +49,7 @@ public class Block : MonoBehaviour
             Stop();
         }
 
-        this.transform.position = origin + direction * timer;
+        transform.position = origin + direction * timer;
     }
 
     public void Move(Vector3 dir, bool indir = false)
@@ -58,12 +59,14 @@ public class Block : MonoBehaviour
         sign = indir ? minSpeed : maxSpeed;
         indirect = indir;
 
-        if(!indir) {
+        if (!indir)
+        {
             Invoke(nameof(End), 5f);
         }
     }
 
-    void End() {
+    void End()
+    {
         Destroy(gameObject);
     }
 
@@ -93,10 +96,11 @@ public class Block : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var block = other.GetComponent<Block>();
-        if (sign > 0 && !block.enabled)
+        if (!block.enabled)
         {
             Stop(other.gameObject);
             block.Move(direction, true);
+            if(missing) missing.Move(direction, true);
         }
     }
 }
